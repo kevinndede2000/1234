@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Create Exam - Exam Portal{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="mb-0"><i class="fas fa-plus-circle me-2"></i>Create New Exam</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST" id="examForm">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="title" class="form-label">Exam Title</label>
+                            <input type="text" class="form-control" id="title" name="title" required>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="subject" class="form-label">Subject</label>
+                            <select class="form-select" id="subject" name="subject" required>
+                                <option value="">Select Subject</option>
+                                {% for subject in subjects %}
+                                <option value="{{ subject }}">{{ subject }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label for="duration" class="form-label">Duration (minutes)</label>
+                            <input type="number" class="form-control" id="duration" name="duration" min="5" max="180" required>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5><i class="fas fa-question-circle me-2"></i>Questions</h5>
+                        <button type="button" class="btn btn-success btn-sm" onclick="addQuestion()">
+                            <i class="fas fa-plus me-1"></i>Add Question
+                        </button>
+                    </div>
+
+                    <div id="questionsContainer">
+                        <!-- Questions will be added here dynamically -->
+                    </div>
+
+                    <input type="hidden" id="questionCount" name="question_count" value="0">
+
+                    <div class="text-center mt-4">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-save me-1"></i>Create Exam
+                        </button>
+                        <a href="{{ url_for('exam.exam_list') }}" class="btn btn-secondary btn-lg ms-2">
+                            <i class="fas fa-times me-1"></i>Cancel
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let questionCount = 0;
+
+function addQuestion() {
+    const container = document.getElementById('questionsContainer');
+    const questionDiv = document.createElement('div');
+    questionDiv.className = 'card mb-3';
+    questionDiv.id = `question_${questionCount}`;
+    
+    questionDiv.innerHTML = `
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h6 class="mb-0">Question ${questionCount + 1}</h6>
+            <button type="button" class="btn btn-danger btn-sm" onclick="removeQuestion(${questionCount})">
+                <i class="fas fa-trash"></i>
+            </button>
+        </div>
+        <div class="card-body">
+            <div class="mb-3">
+                <label class="form-label">Question Text</label>
+                <textarea class="form-control" name="question_${questionCount}" rows="2" required></textarea>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="mb-2">
+                        <label class="form-label">Option A</label>
+                        <input type="text" class="form-control" name="option_a_${questionCount}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Option B</label>
+                        <input type="text" class="form-control" name="option_b_${questionCount}" required>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="mb-2">
+                        <label class="form-label">Option C</label>
+                        <input type="text" class="form-control" name="option_c_${questionCount}" required>
+                    </div>
+                    <div class="mb-2">
+                        <label class="form-label">Option D</label>
+                        <input type="text" class="form-control" name="option_d_${questionCount}" required>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-2">
+                <label class="form-label">Correct Answer</label>
+                <select class="form-select" name="correct_${questionCount}" required>
+                    <option value="">Select Correct Answer</option>
+                    <option value="A">Option A</option>
+                    <option value="B">Option B</option>
+                    <option value="C">Option C</option>
+                    <option value="D">Option D</option>
+                </select>
+            </div>
+        </div>
+    `;
+    
+    container.appendChild(questionDiv);
+    questionCount++;
+    document.getElementById('questionCount').value = questionCount;
+}
+
+function removeQuestion(index) {
+    const questionDiv = document.getElementById(`question_${index}`);
+    questionDiv.remove();
+    
+    // Update question numbers
+    const questions = document.querySelectorAll('[id^="question_"]');
+    questions.forEach((q, i) => {
+        const header = q.querySelector('.card-header h6');
+        header.textContent = `Question ${i + 1}`;
+    });
+}
+
+// Add first question by default
+document.addEventListener('DOMContentLoaded', function() {
+    addQuestion();
+});
+
+// Form validation
+document.getElementById('examForm').addEventListener('submit', function(e) {
+    if (questionCount === 0) {
+        e.preventDefault();
+        alert('Please add at least one question to the exam.');
+        return false;
+    }
+});
+</script>
+{% endblock %}

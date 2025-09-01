@@ -1,0 +1,261 @@
+{% extends "base.html" %}
+
+{% block title %}{{ exam.title }} - Exam Portal{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h4 class="mb-0">{{ exam.title }}</h4>
+                        <small>{{ exam.subject }} • {{ exam.questions|length }} Questions</small>
+                    </div>
+                    <div class="text-end">
+                        <div id="timer" class="fs-4 fw-bold">
+                            <i class="fas fa-clock me-1"></i>
+                            <span id="timeLeft">{{ exam.duration }}:00</span>
+                        </div>
+                        <small>Time Remaining</small>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <form id="examForm">
+                    {% for question in exam.questions %}
+                    <div class="question-container mb-4 p-3 border rounded" id="question_{{ loop.index0 }}">
+                        <h5 class="mb-3">
+                            <span class="badge bg-secondary me-2">{{ loop.index }}</span>
+                            {{ question.question }}
+                        </h5>
+                        
+                        <div class="row">
+                            {% for option_key, option_value in question.options.items() %}
+                            <div class="col-md-6 mb-2">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" 
+                                           name="question_{{ loop.index0 }}" 
+                                           id="q{{ loop.index0 }}_{{ option_key }}" 
+                                           value="{{ option_key }}"
+                                           onchange="updateProgress()">
+                                    <label class="form-check-label" for="q{{ loop.index0 }}_{{ option_key }}">
+                                        <strong>{{ option_key }}.</strong> {{ option_value }}
+                                    </label>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    
+                    <div class="text-center mt-4">
+                        <button type="button" class="btn btn-success btn-lg" onclick="submitExam()">
+                            <i class="fas fa-paper-plane me-1"></i>Submit Exam
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-lg ms-2" onclick="reviewAnswers()">
+                            <i class="fas fa-eye me-1"></i>Review Answers
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Progress Bar -->
+<div class="fixed-bottom bg-white border-top p-2">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <div class="progress">
+                    <div class="progress-bar" role="progressbar" style="width: 0%" id="progressBar"></div>
+                </div>
+                <small class="text-muted">Progress: <span id="progressText">0/{{ exam.questions|length }}</span> questions answered</small>
+            </div>
+            <div class="col-md-4 text-end">
+                <button class="btn btn-outline-primary btn-sm" onclick="scrollToUnanswered()">
+                    <i class="fas fa-search me-1"></i>Find Unanswered
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let timeLeft = {{ exam.duration }} * 60; // Convert minutes to seconds
+let examSubmitted = false;
+const totalQuestions = {{ exam.questions|length }};
+
+// Timer functionality
+function updateTimer() {
+    if (timeLeft <= 0 || examSubmitted) {
+        if (!examSubmitted) {
+            alert('Time is up! Submitting exam automatically.');
+            submitExam();
+        }
+        return;
+    }
+    
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    document.getElementById('timeLeft').textContent = 
+        `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+    
+    // Change color when time is running low
+    const timerElement = document.getElementById('timer');
+    if (timeLeft <= 300) { // 5 minutes
+        timerElement.className = 'fs-4 fw-bold text-danger';
+    } else if (timeLeft <= 600) { // 10 minutes
+        timerElement.className = 'fs-4 fw-bold text-warning';
+    }
+    
+    timeLeft--;
+}
+
+// Start timer
+setInterval(updateTimer, 1000);
+
+// Progress tracking
+function updateProgress() {
+    let answered = 0;
+    for (let i = 0; i < totalQuestions; i++) {
+        const radios = document.getElementsByName(`question_${i}`);
+        for (let radio of radios) {
+            if (radio.checked) {
+                answered++;
+                break;
+            }
+        }
+    }
+    
+    const percentage = (answered / totalQuestions) * 100;
+    document.getElementById('progressBar').style.width = percentage + '%';
+    document.getElementById('progressText').textContent = `${answered}/${totalQuestions}`;
+}
+
+// Submit exam
+function submitExam() {
+    if (examSubmitted) return;
+    
+    const answers = {};
+    let unanswered = [];
+    
+    for (let i = 0; i < totalQuestions; i++) {
+        const radios = document.getElementsByName(`question_${i}`);
+        let answered = false;
+        
+        for (let radio of radios) {
+            if (radio.checked) {
+                answers[i] = radio.value;
+                answered = true;
+                break;
+            }
+        }
+        
+        if (!answered) {
+            unanswered.push(i + 1);
+        }
+    }
+    
+    if (unanswered.length > 0) {
+        const proceed = confirm(`You have ${unanswered.length} unanswered questions (${unanswered.join(', ')}). Do you want to submit anyway?`);
+        if (!proceed) return;
+    }
+    
+    examSubmitted = true;
+    
+    // Show loading
+    const submitBtn = document.querySelector('button[onclick="submitExam()"]');
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin me-1"></i>Submitting...';
+    submitBtn.disabled = true;
+    
+    // Submit to server
+    fetch(`/exam/{{ exam.id }}/submit`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ answers: answers })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(`Exam submitted successfully!\nScore: ${data.score}/${data.total} (${data.percentage}%)`);
+            window.location.href = '/results';
+        } else {
+            alert('Error submitting exam: ' + (data.error || 'Unknown error'));
+            examSubmitted = false;
+            submitBtn.innerHTML = '<i class="fas fa-paper-plane me-1"></i>Submit Exam';
+            submitBtn.disabled = false;
+        }
+    })
+    .catch(error => {
+        alert('Error submitting exam: ' + error.message);
+        examSubmitted = false;
+        submitBtn.innerHTML = '<i class="fas fa-paper-plane me-1"></i>Submit Exam';
+        submitBtn.disabled = false;
+    });
+}
+
+// Review answers
+function reviewAnswers() {
+    let review = "Review of your answers:\n\n";
+    let answered = 0;
+    
+    for (let i = 0; i < totalQuestions; i++) {
+        const radios = document.getElementsByName(`question_${i}`);
+        let selectedAnswer = 'Not answered';
+        
+        for (let radio of radios) {
+            if (radio.checked) {
+                selectedAnswer = radio.value;
+                answered++;
+                break;
+            }
+        }
+        
+        review += `Question ${i + 1}: ${selectedAnswer}\n`;
+    }
+    
+    review += `\nTotal answered: ${answered}/${totalQuestions}`;
+    alert(review);
+}
+
+// Scroll to first unanswered question
+function scrollToUnanswered() {
+    for (let i = 0; i < totalQuestions; i++) {
+        const radios = document.getElementsByName(`question_${i}`);
+        let answered = false;
+        
+        for (let radio of radios) {
+            if (radio.checked) {
+                answered = true;
+                break;
+            }
+        }
+        
+        if (!answered) {
+            document.getElementById(`question_${i}`).scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
+            return;
+        }
+    }
+    
+    alert('All questions have been answered!');
+}
+
+// Prevent accidental page refresh
+window.addEventListener('beforeunload', function(e) {
+    if (!examSubmitted) {
+        e.preventDefault();
+        e.returnValue = '';
+    }
+});
+
+// Initialize progress on page load
+updateProgress();
+</script>
+{% endblock %}

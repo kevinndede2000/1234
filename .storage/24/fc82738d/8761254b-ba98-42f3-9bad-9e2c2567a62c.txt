@@ -1,0 +1,60 @@
+$ git clone https://github.com/kevinndede2000/hack3.git
+Cloning into 'hack3'...
+$ cd hack3
+
+$ ls -la
+
+total 994
+drwxr-xr-x  46 root root 208896 Sep  1 02:37 .
+drwxr-xr-x 138 root root 606208 Sep  1 02:37 ..
+drwxr-xr-x  32 root root 151552 Sep  1 02:37 .git
+-rw-r--r--   1 root root    103 Sep  1 02:37 app.py
+drwxr-xr-x   3 root root   8192 Sep  1 02:37 data
+-rw-r--r--   1 root root    974 Sep  1 02:37 requirements.txt
+-rw-r--r--   1 root root      0 Sep  1 02:37 students.json
+-rw-r--r--   1 root root      0 Sep  1 02:37 teachers.json
+drwxr-xr-x   9 root root  40960 Sep  1 02:37 website
+$ ls -la website/
+
+total 310
+drwxr-xr-x  9 root root  40960 Sep  1 02:37 .
+drwxr-xr-x 46 root root 208896 Sep  1 02:37 ..
+-rw-r--r--  1 root root    243 Sep  1 02:37 __init__.py
+drwxr-xr-x  7 root root  32768 Sep  1 02:37 __pycache__
+-rw-r--r--  1 root root   1377 Sep  1 02:37 auth.py
+-rw-r--r--  1 root root    806 Sep  1 02:37 models.py
+drwxr-xr-x  3 root root   8192 Sep  1 02:37 static
+-rw-r--r--  1 root root      2 Sep  1 02:37 students.json
+-rw-r--r--  1 root root    227 Sep  1 02:37 subjects.py
+-rw-r--r--  1 root root      3 Sep  1 02:37 teachers.json
+drwxr-xr-x  5 root root  16384 Sep  1 02:37 templates
+-rw-r--r--  1 root root   5538 Sep  1 02:37 views.py
+$ ls -la website/templates/
+
+total 69
+drwxr-xr-x 5 root root 16384 Sep  1 02:37 .
+drwxr-xr-x 9 root root 40960 Sep  1 02:37 ..
+-rw-r--r-- 1 root root   373 Sep  1 02:37 add_form.html
+-rw-r--r-- 1 root root   614 Sep  1 02:37 add_student.html
+-rw-r--r-- 1 root root   445 Sep  1 02:37 add_teacher.html
+-rw-r--r-- 1 root root   623 Sep  1 02:37 admin_dashboard.html
+-rw-r--r-- 1 root root     0 Sep  1 02:37 base.html
+-rw-r--r-- 1 root root  1163 Sep  1 02:37 dashboard.html
+-rw-r--r-- 1 root root   588 Sep  1 02:37 enroll_student.html
+-rw-r--r-- 1 root root   493 Sep  1 02:37 login.html
+-rw-r--r-- 1 root root   885 Sep  1 02:37 merit_list.html
+-rw-r--r-- 1 root root   580 Sep  1 02:37 merit_pdf.html
+-rw-r--r-- 1 root root   464 Sep  1 02:37 register.html
+-rw-r--r-- 1 root root  1114 Sep  1 02:37 report.html
+-rw-r--r-- 1 root root  1010 Sep  1 02:37 subject_stats.html
+-rw-r--r-- 1 root root  1023 Sep  1 02:37 submit_marks.html
+-rw-r--r-- 1 root root   539 Sep  1 02:37 teacher_dashboard.html
+$ ls -la website/static/
+
+total 48
+drwxr-xr-x 3 root root  8192 Sep  1 02:37 .
+drwxr-xr-x 9 root root 40960 Sep  1 02:37 ..
+-rw-r--r-- 1 root root     0 Sep  1 02:37 script.js
+-rw-r--r-- 1 root root     0 Sep  1 02:37 styles.css
+$ cd /workspace/flask_template
+

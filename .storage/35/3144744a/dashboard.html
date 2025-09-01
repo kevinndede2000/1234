@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - Exam Portal{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="fas fa-tachometer-alt me-2"></i>Dashboard</h2>
+            <div class="text-end">
+                <p class="mb-0 text-muted">Welcome back,</p>
+                <h5 class="mb-0">{{ session.user_name }}</h5>
+                <small class="text-muted">{{ session.user_type|title }}</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if session.user_type == 'teacher' %}
+<!-- Teacher Dashboard -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ students|length }}</h4>
+                        <p class="mb-0">Total Students</p>
+                    </div>
+                    <i class="fas fa-users fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ active_exams|length if active_exams else 0 }}</h4>
+                        <p class="mb-0">Active Exams</p>
+                    </div>
+                    <i class="fas fa-file-alt fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ total_results if total_results else 0 }}</h4>
+                        <p class="mb-0">Total Results</p>
+                    </div>
+                    <i class="fas fa-chart-line fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ average_score if average_score else 0 }}%</h4>
+                        <p class="mb-0">Avg Score</p>
+                    </div>
+                    <i class="fas fa-trophy fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0"><i class="fas fa-users me-2"></i>Students Overview</h5>
+                <a href="{{ url_for('views.enroll_student') }}" class="btn btn-primary btn-sm">
+                    <i class="fas fa-plus me-1"></i>Add Student
+                </a>
+            </div>
+            <div class="card-body">
+                {% if students %}
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Adm No</th>
+                                <th>Name</th>
+                                <th>Form</th>
+                                <th>Stream</th>
+                                <th>Total</th>
+                                <th>Average</th>
+                                <th>Rank</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for s in students %}
+                            <tr>
+                                <td><span class="badge bg-secondary">{{ s.adm_no }}</span></td>
+                                <td>{{ s.name }}</td>
+                                <td>{{ s.form }}</td>
+                                <td>{{ s.stream }}</td>
+                                <td>{{ s.total if s.total else 0 }}</td>
+                                <td>{{ s.average if s.average else 0 }}%</td>
+                                <td>
+                                    {% if s.rank %}
+                                        <span class="badge bg-success">#{{ s.rank }}</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary">N/A</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="btn-group btn-group-sm">
+                                        <a href="{{ url_for('views.submit_marks', adm_no=s.adm_no) }}" 
+                                           class="btn btn-outline-primary" title="Submit Marks">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <a href="{{ url_for('views.report', adm_no=s.adm_no) }}" 
+                                           class="btn btn-outline-info" title="View Report">
+                                            <i class="fas fa-file-alt"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                {% else %}
+                <div class="text-center py-4">
+                    <i class="fas fa-users fa-3x text-muted mb-3"></i>
+                    <h5 class="text-muted">No students enrolled yet</h5>
+                    <p class="text-muted">Start by enrolling your first student</p>
+                    <a href="{{ url_for('views.enroll_student') }}" class="btn btn-primary">
+                        <i class="fas fa-plus me-1"></i>Enroll Student
+                    </a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<!-- Student Dashboard -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ available_exams|length if available_exams else 0 }}</h4>
+                        <p class="mb-0">Available Exams</p>
+                    </div>
+                    <i class="fas fa-file-alt fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ completed_exams|length if completed_exams else 0 }}</h4>
+                        <p class="mb-0">Completed Exams</p>
+                    </div>
+                    <i class="fas fa-check-circle fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ student_average if student_average else 0 }}%</h4>
+                        <p class="mb-0">Average Score</p>
+                    </div>
+                    <i class="fas fa-chart-line fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-clock me-2"></i>Available Exams</h5>
+            </div>
+            <div class="card-body">
+                {% if available_exams %}
+                    {% for exam in available_exams %}
+                    <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                        <div>
+                            <h6 class="mb-1">{{ exam.title }}</h6>
+                            <small class="text-muted">{{ exam.subject }} • {{ exam.duration }} minutes</small>
+                        </div>
+                        <a href="{{ url_for('exam.take_exam', exam_id=exam.id) }}" class="btn btn-primary btn-sm">
+                            Take Exam
+                        </a>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <div class="text-center py-3">
+                    <i class="fas fa-clipboard-list fa-2x text-muted mb-2"></i>
+                    <p class="text-muted mb-0">No exams available at the moment</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0"><i class="fas fa-trophy me-2"></i>Recent Results</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_results %}
+                    {% for result in recent_results %}
+                    <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                        <div>
+                            <h6 class="mb-1">{{ result.exam_title }}</h6>
+                            <small class="text-muted">{{ result.exam_subject }}</small>
+                        </div>
+                        <div class="text-end">
+                            <span class="badge bg-{{ 'success' if result.percentage >= 70 else 'warning' if result.percentage >= 50 else 'danger' }}">
+                                {{ result.percentage }}%
+                            </span>
+                            <br>
+                            <small class="text-muted">{{ result.score }}/{{ result.total_questions }}</small>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                <div class="text-center py-3">
+                    <i class="fas fa-chart-line fa-2x text-muted mb-2"></i>
+                    <p class="text-muted mb-0">No results yet</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

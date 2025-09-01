@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}Exams - Exam Portal{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2><i class="fas fa-file-alt me-2"></i>
+                {% if session.user_type == 'student' %}Available Exams{% else %}All Exams{% endif %}
+            </h2>
+            {% if session.user_type == 'teacher' %}
+            <a href="{{ url_for('exam.create_exam_route') }}" class="btn btn-primary">
+                <i class="fas fa-plus me-1"></i>Create New Exam
+            </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    {% if exams %}
+        {% for exam in exams %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100 shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="card-title mb-0">{{ exam.title }}</h5>
+                </div>
+                <div class="card-body">
+                    <div class="mb-2">
+                        <i class="fas fa-book me-2 text-muted"></i>
+                        <strong>Subject:</strong> {{ exam.subject }}
+                    </div>
+                    <div class="mb-2">
+                        <i class="fas fa-clock me-2 text-muted"></i>
+                        <strong>Duration:</strong> {{ exam.duration }} minutes
+                    </div>
+                    <div class="mb-2">
+                        <i class="fas fa-question-circle me-2 text-muted"></i>
+                        <strong>Questions:</strong> {{ exam.questions|length }}
+                    </div>
+                    <div class="mb-3">
+                        <i class="fas fa-user me-2 text-muted"></i>
+                        <strong>Created by:</strong> {{ exam.created_by }}
+                    </div>
+                    
+                    {% if session.user_type == 'student' %}
+                    <div class="d-grid">
+                        <a href="{{ url_for('exam.take_exam', exam_id=exam.id) }}" class="btn btn-success">
+                            <i class="fas fa-play me-1"></i>Take Exam
+                        </a>
+                    </div>
+                    {% else %}
+                    <div class="d-grid gap-2">
+                        <a href="{{ url_for('exam.exam_results', exam_id=exam.id) }}" class="btn btn-info">
+                            <i class="fas fa-chart-bar me-1"></i>View Results
+                        </a>
+                        <div class="btn-group">
+                            <button class="btn btn-outline-secondary btn-sm" disabled>
+                                <i class="fas fa-edit me-1"></i>Edit
+                            </button>
+                            <button class="btn btn-outline-danger btn-sm" disabled>
+                                <i class="fas fa-trash me-1"></i>Delete
+                            </button>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="card-footer text-muted">
+                    <small>
+                        <i class="fas fa-calendar me-1"></i>
+                        Created: {{ exam.created_at[:10] }}
+                    </small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    {% else %}
+    <div class="col-12">
+        <div class="text-center py-5">
+            <i class="fas fa-file-alt fa-4x text-muted mb-3"></i>
+            <h4 class="text-muted">
+                {% if session.user_type == 'student' %}
+                    No exams available at the moment
+                {% else %}
+                    No exams created yet
+                {% endif %}
+            </h4>
+            <p class="text-muted">
+                {% if session.user_type == 'student' %}
+                    Check back later for new exams from your teachers.
+                {% else %}
+                    Start by creating your first exam to assess your students.
+                {% endif %}
+            </p>
+            {% if session.user_type == 'teacher' %}
+            <a href="{{ url_for('exam.create_exam_route') }}" class="btn btn-primary btn-lg">
+                <i class="fas fa-plus me-1"></i>Create Your First Exam
+            </a>
+            {% endif %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

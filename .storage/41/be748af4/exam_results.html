@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+
+{% block title %}{{ exam.title }} Results - Exam Portal{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2><i class="fas fa-chart-bar me-2"></i>{{ exam.title }} - Results</h2>
+                <p class="text-muted mb-0">{{ exam.subject }} • {{ results|length }} submissions</p>
+            </div>
+            <a href="{{ url_for('exam.exam_list') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left me-1"></i>Back to Exams
+            </a>
+        </div>
+    </div>
+</div>
+
+{% if results %}
+<!-- Statistics Cards -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="card bg-primary text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ results|length }}</h4>
+                        <p class="mb-0">Total Submissions</p>
+                    </div>
+                    <i class="fas fa-users fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-success text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ (results | selectattr('percentage', '>=', 70) | list | length) }}</h4>
+                        <p class="mb-0">Passed (≥70%)</p>
+                    </div>
+                    <i class="fas fa-check-circle fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-info text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ "%.1f"|format((results | sum(attribute='percentage')) / results|length) }}%</h4>
+                        <p class="mb-0">Average Score</p>
+                    </div>
+                    <i class="fas fa-chart-line fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card bg-warning text-white">
+            <div class="card-body">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h4>{{ results | max(attribute='percentage') | round(1) }}%</h4>
+                        <p class="mb-0">Highest Score</p>
+                    </div>
+                    <i class="fas fa-trophy fa-2x opacity-75"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Results Table -->
+<div class="card">
+    <div class="card-header">
+        <h5 class="mb-0"><i class="fas fa-table me-2"></i>Detailed Results</h5>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead class="table-light">
+                    <tr>
+                        <th>Rank</th>
+                        <th>Student Name</th>
+                        <th>Admission No</th>
+                        <th>Form</th>
+                        <th>Stream</th>
+                        <th>Score</th>
+                        <th>Percentage</th>
+                        <th>Grade</th>
+                        <th>Submitted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for result in results %}
+                    <tr>
+                        <td>
+                            <span class="badge bg-{{ 'warning' if loop.index <= 3 else 'secondary' }}">
+                                #{{ loop.index }}
+                            </span>
+                        </td>
+                        <td>
+                            <strong>{{ result.student_name }}</strong>
+                        </td>
+                        <td>{{ result.student_id }}</td>
+                        <td>{{ result.student_form }}</td>
+                        <td>{{ result.student_stream }}</td>
+                        <td>{{ result.score }}/{{ result.total_questions }}</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-{{ 'success' if result.percentage >= 70 else 'warning' if result.percentage >= 50 else 'danger' }} me-2">
+                                    {{ result.percentage }}%
+                                </span>
+                                <div class="progress flex-grow-1" style="height: 8px;">
+                                    <div class="progress-bar bg-{{ 'success' if result.percentage >= 70 else 'warning' if result.percentage >= 50 else 'danger' }}" 
+                                         style="width: {{ result.percentage }}%"></div>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <span class="badge bg-{{ 'success' if result.percentage >= 80 else 'primary' if result.percentage >= 70 else 'info' if result.percentage >= 60 else 'warning' if result.percentage >= 50 else 'danger' }}">
+                                {% if result.percentage >= 80 %}A
+                                {% elif result.percentage >= 70 %}B
+                                {% elif result.percentage >= 60 %}C
+                                {% elif result.percentage >= 50 %}D
+                                {% else %}F
+                                {% endif %}
+                            </span>
+                        </td>
+                        <td>
+                            <small class="text-muted">{{ result.submitted_at[:16] }}</small>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="text-center py-5">
+    <i class="fas fa-inbox fa-4x text-muted mb-3"></i>
+    <h4 class="text-muted">No submissions yet</h4>
+    <p class="text-muted">Students haven't taken this exam yet. Share the exam with your students to get submissions.</p>
+</div>
+{% endif %}
+{% endblock %}

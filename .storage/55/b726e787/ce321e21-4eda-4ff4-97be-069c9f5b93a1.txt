@@ -1,0 +1,2 @@
+$ lsof -i :5000
+bash: line 1: lsof: command not found

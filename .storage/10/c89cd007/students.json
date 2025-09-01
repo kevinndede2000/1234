@@ -1,0 +1,23 @@
+[
+    {
+        "adm_no": "123",
+        "name": "WYCLIFFE OTIENO",
+        "form": "4",
+        "stream": "r",
+        "total": 179,
+        "average": 89.5,
+        "rank": 1,
+        "compulsory": {
+            "Mathematics": {
+                "score": 90,
+                "comment": "good",
+                "sentiment": "Positive"
+            },
+            "English": {
+                "score": 89,
+                "comment": "good",
+                "sentiment": "Positive"
+            }
+        }
+    }
+]

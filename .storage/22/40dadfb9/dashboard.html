@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+<h2>Dashboard</h2>
+<p>Welcome, {{ session.teacher }}</p>
+
+<nav>
+    <a href="{{ url_for('views.enroll_student') }}">Enroll Student</a> |
+    <a href="{{ url_for('views.merit_list_view') }}">Merit List</a> |
+    <a href="{{ url_for('views.subject_stats_view') }}">Subject Stats</a> |
+    <a href="{{ url_for('auth.logout') }}">Logout</a>
+</nav>
+
+<h3>Students</h3>
+<table border="1">
+    <tr>
+        <th>Adm No</th>
+        <th>Name</th>
+        <th>Form</th>
+        <th>Stream</th>
+        <th>Total</th>
+        <th>Average</th>
+        <th>Rank</th>
+        <th>Actions</th>
+    </tr>
+    {% for s in students %}
+    <tr>
+        <td>{{ s.adm_no }}</td>
+        <td>{{ s.name }}</td>
+        <td>{{ s.form }}</td>
+        <td>{{ s.stream }}</td>
+        <td>{{ s.total }}</td>
+        <td>{{ s.average }}</td>
+        <td>{{ s.rank }}</td>
+        <td>
+            <a href="{{ url_for('views.submit_marks', adm_no=s.adm_no) }}">Marks</a> |
+            <a href="{{ url_for('views.report', adm_no=s.adm_no) }}">Report</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</body>
+</html>

@@ -1,0 +1,206 @@
+$ git clone https://github.com/kevinndede2000/hack3.git
+Cloning into 'hack3'...
+$ cd hack3
+
+$ ls -la
+
+total 994
+drwxr-xr-x  46 root root 208896 Sep  1 02:37 .
+drwxr-xr-x 138 root root 606208 Sep  1 02:37 ..
+drwxr-xr-x  32 root root 151552 Sep  1 02:37 .git
+-rw-r--r--   1 root root    103 Sep  1 02:37 app.py
+drwxr-xr-x   3 root root   8192 Sep  1 02:37 data
+-rw-r--r--   1 root root    974 Sep  1 02:37 requirements.txt
+-rw-r--r--   1 root root      0 Sep  1 02:37 students.json
+-rw-r--r--   1 root root      0 Sep  1 02:37 teachers.json
+drwxr-xr-x   9 root root  40960 Sep  1 02:37 website
+$ ls -la website/
+
+total 310
+drwxr-xr-x  9 root root  40960 Sep  1 02:37 .
+drwxr-xr-x 46 root root 208896 Sep  1 02:37 ..
+-rw-r--r--  1 root root    243 Sep  1 02:37 __init__.py
+drwxr-xr-x  7 root root  32768 Sep  1 02:37 __pycache__
+-rw-r--r--  1 root root   1377 Sep  1 02:37 auth.py
+-rw-r--r--  1 root root    806 Sep  1 02:37 models.py
+drwxr-xr-x  3 root root   8192 Sep  1 02:37 static
+-rw-r--r--  1 root root      2 Sep  1 02:37 students.json
+-rw-r--r--  1 root root    227 Sep  1 02:37 subjects.py
+-rw-r--r--  1 root root      3 Sep  1 02:37 teachers.json
+drwxr-xr-x  5 root root  16384 Sep  1 02:37 templates
+-rw-r--r--  1 root root   5538 Sep  1 02:37 views.py
+$ ls -la website/templates/
+
+total 69
+drwxr-xr-x 5 root root 16384 Sep  1 02:37 .
+drwxr-xr-x 9 root root 40960 Sep  1 02:37 ..
+-rw-r--r-- 1 root root   373 Sep  1 02:37 add_form.html
+-rw-r--r-- 1 root root   614 Sep  1 02:37 add_student.html
+-rw-r--r-- 1 root root   445 Sep  1 02:37 add_teacher.html
+-rw-r--r-- 1 root root   623 Sep  1 02:37 admin_dashboard.html
+-rw-r--r-- 1 root root     0 Sep  1 02:37 base.html
+-rw-r--r-- 1 root root  1163 Sep  1 02:37 dashboard.html
+-rw-r--r-- 1 root root   588 Sep  1 02:37 enroll_student.html
+-rw-r--r-- 1 root root   493 Sep  1 02:37 login.html
+-rw-r--r-- 1 root root   885 Sep  1 02:37 merit_list.html
+-rw-r--r-- 1 root root   580 Sep  1 02:37 merit_pdf.html
+-rw-r--r-- 1 root root   464 Sep  1 02:37 register.html
+-rw-r--r-- 1 root root  1114 Sep  1 02:37 report.html
+-rw-r--r-- 1 root root  1010 Sep  1 02:37 subject_stats.html
+-rw-r--r-- 1 root root  1023 Sep  1 02:37 submit_marks.html
+-rw-r--r-- 1 root root   539 Sep  1 02:37 teacher_dashboard.html
+$ ls -la website/static/
+
+total 48
+drwxr-xr-x 3 root root  8192 Sep  1 02:37 .
+drwxr-xr-x 9 root root 40960 Sep  1 02:37 ..
+-rw-r--r-- 1 root root     0 Sep  1 02:37 script.js
+-rw-r--r-- 1 root root     0 Sep  1 02:37 styles.css
+$ cd /workspace/flask_template
+
+$ cd /workspace/hack3
+
+$ pip install -r requirements.txt
+
+Collecting africastalking==1.2.9
+  Downloading africastalking-1.2.9-py3-none-any.whl (14 kB)
+Collecting arabic-reshaper==3.0.0
+  Downloading arabic_reshaper-3.0.0-py3-none-any.whl (20 kB)
+Collecting asn1crypto==1.5.1
+  Downloading asn1crypto-1.5.1-py2.py3-none-any.whl (105 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 105.0/105.0 kB 4.8 MB/s eta 0:00:00
+Requirement already satisfied: blinker==1.9.0 in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from -r requirements.txt (line 4)) (1.9.0)
+Requirement already satisfied: Brotli==1.1.0 in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from -r requirements.txt (line 5)) (1.1.0)
+Collecting certifi==2025.7.14
+  Downloading certifi-2025.7.14-py3-none-any.whl (162 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 162.7/162.7 kB 11.9 MB/s eta 0:00:00
+Collecting cffi==1.17.1
+  Downloading cffi-1.17.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (446 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 446.2/446.2 kB 9.1 MB/s eta 0:00:00
+Collecting charset-normalizer==3.4.2
+  Downloading charset_normalizer-3.4.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (149 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 149.5/149.5 kB 5.6 MB/s eta 0:00:00
+Requirement already satisfied: click==8.2.1 in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from -r requirements.txt (line 9)) (8.2.1)
+Collecting colorama==0.4.6
+  Downloading colorama-0.4.6-py2.py3-none-any.whl (25 kB)
+Collecting cryptography==45.0.6
+  Downloading cryptography-45.0.6-cp37-abi3-manylinux_2_34_x86_64.whl (4.4 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.4/4.4 MB 59.6 MB/s eta 0:00:00
+Collecting cssselect2==0.8.0
+  Downloading cssselect2-0.8.0-py3-none-any.whl (15 kB)
+Requirement already satisfied: Flask==3.1.1 in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from -r requirements.txt (line 13)) (3.1.1)
+Collecting Flask-Login==0.6.3
+  Downloading Flask_Login-0.6.3-py3-none-any.whl (17 kB)
+Collecting Flask-SQLAlchemy==3.1.1
+  Downloading flask_sqlalchemy-3.1.1-py3-none-any.whl (25 kB)
+Collecting fonttools==4.59.2
+  Downloading fonttools-4.59.2-cp310-cp310-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.8 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.8/4.8 MB 66.3 MB/s eta 0:00:00
+Collecting greenlet==3.2.3
+  Downloading greenlet-3.2.3-cp310-cp310-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (582 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 582.2/582.2 kB 14.1 MB/s eta 0:00:00
+Collecting html5lib==1.1
+  Downloading html5lib-1.1-py2.py3-none-any.whl (112 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 112.2/112.2 kB 6.1 MB/s eta 0:00:00
+Collecting idna==3.10
+  Downloading idna-3.10-py3-none-any.whl (70 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 70.4/70.4 kB 3.8 MB/s eta 0:00:00
+Requirement already satisfied: itsdangerous==2.2.0 in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from -r requirements.txt (line 20)) (2.2.0)
+Requirement already satisfied: Jinja2==3.1.6 in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from -r requirements.txt (line 21)) (3.1.6)
+Collecting lxml==6.0.1
+  Downloading lxml-6.0.1-cp310-cp310-manylinux_2_26_x86_64.manylinux_2_28_x86_64.whl (5.3 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.3/5.3 MB 49.7 MB/s eta 0:00:00
+Requirement already satisfied: MarkupSafe==3.0.2 in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from -r requirements.txt (line 23)) (3.0.2)
+ERROR: Ignored the following versions that require a different python version: 2.3.0 Requires-Python >=3.11; 2.3.1 Requires-Python >=3.11; 2.3.2 Requires-Python >=3.11
+ERROR: Could not find a version that satisfies the requirement numpy==2.3.1 (from versions: 1.3.0, 1.4.1, 1.5.0, 1.5.1, 1.6.0, 1.6.1, 1.6.2, 1.7.0, 1.7.1, 1.7.2, 1.8.0, 1.8.1, 1.8.2, 1.9.0, 1.9.1, 1.9.2, 1.9.3, 1.10.0.post2, 1.10.1, 1.10.2, 1.10.4, 1.11.0, 1.11.1, 1.11.2, 1.11.3, 1.12.0, 1.12.1, 1.13.0, 1.13.1, 1.13.3, 1.14.0, 1.14.1, 1.14.2, 1.14.3, 1.14.4, 1.14.5, 1.14.6, 1.15.0, 1.15.1, 1.15.2, 1.15.3, 1.15.4, 1.16.0, 1.16.1, 1.16.2, 1.16.3, 1.16.4, 1.16.5, 1.16.6, 1.17.0, 1.17.1, 1.17.2, 1.17.3, 1.17.4, 1.17.5, 1.18.0, 1.18.1, 1.18.2, 1.18.3, 1.18.4, 1.18.5, 1.19.0, 1.19.1, 1.19.2, 1.19.3, 1.19.4, 1.19.5, 1.20.0, 1.20.1, 1.20.2, 1.20.3, 1.21.0, 1.21.1, 1.21.2, 1.21.3, 1.21.4, 1.21.5, 1.21.6, 1.22.0, 1.22.1, 1.22.2, 1.22.3, 1.22.4, 1.23.0, 1.23.1, 1.23.2, 1.23.3, 1.23.4, 1.23.5, 1.24.0, 1.24.1, 1.24.2, 1.24.3, 1.24.4, 1.25.0, 1.25.1, 1.25.2, 1.26.0, 1.26.1, 1.26.2, 1.26.3, 1.26.4, 2.0.0, 2.0.1, 2.0.2, 2.1.0, 2.1.1, 2.1.2, 2.1.3, 2.2.0, 2.2.1, 2.2.2, 2.2.3, 2.2.4, 2.2.5, 2.2.6)
+ERROR: No matching distribution found for numpy==2.3.1
+
+[notice] A new release of pip is available: 25.0.1 -> 25.2
+[notice] To update, run: pip install --upgrade pip
+$ python app.py
+
+Traceback (most recent call last):
+  File "/workspace/hack3/app.py", line 1, in <module>
+    from website import create_app
+  File "/workspace/hack3/website/__init__.py", line 3, in <module>
+    from .views import views
+  File "/workspace/hack3/website/views.py", line 5, in <module>
+    from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
+ModuleNotFoundError: No module named 'vaderSentiment'
+$ pip install vaderSentiment xhtml2pdf
+
+Collecting vaderSentiment
+  Downloading vaderSentiment-3.3.2-py2.py3-none-any.whl (125 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 126.0/126.0 kB 8.3 MB/s eta 0:00:00
+Collecting xhtml2pdf
+  Downloading xhtml2pdf-0.2.17-py3-none-any.whl (125 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 125.3/125.3 kB 10.6 MB/s eta 0:00:00
+Requirement already satisfied: requests in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from vaderSentiment) (2.32.4)
+Requirement already satisfied: pypdf>=3.1.0 in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from xhtml2pdf) (4.3.1)
+Collecting pyHanko>=0.12.1
+  Downloading pyhanko-0.30.0-py3-none-any.whl (465 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 465.2/465.2 kB 18.4 MB/s eta 0:00:00
+Collecting arabic-reshaper>=3.0.0
+  Using cached arabic_reshaper-3.0.0-py3-none-any.whl (20 kB)
+Collecting html5lib>=1.1
+  Using cached html5lib-1.1-py2.py3-none-any.whl (112 kB)
+Requirement already satisfied: Pillow>=8.1.1 in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from xhtml2pdf) (11.2.1)
+Collecting svglib>=1.2.1
+  Downloading svglib-1.5.1.tar.gz (913 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 913.9/913.9 kB 25.7 MB/s eta 0:00:00
+  Preparing metadata (setup.py): started
+  Preparing metadata (setup.py): finished with status 'done'
+Collecting reportlab<5,>=4.0.4
+  Downloading reportlab-4.4.3-py3-none-any.whl (2.0 MB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.0/2.0 MB 56.4 MB/s eta 0:00:00
+Collecting pyhanko-certvalidator>=0.19.5
+  Downloading pyhanko_certvalidator-0.28.0-py3-none-any.whl (111 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 111.6/111.6 kB 14.9 MB/s eta 0:00:00
+Collecting python-bidi>=0.5.0
+  Downloading python_bidi-0.6.6-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (293 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 293.1/293.1 kB 16.0 MB/s eta 0:00:00
+Requirement already satisfied: six>=1.9 in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from html5lib>=1.1->xhtml2pdf) (1.16.0)
+Collecting webencodings
+  Downloading webencodings-0.5.1-py2.py3-none-any.whl (11 kB)
+Collecting asn1crypto>=1.5.1
+  Using cached asn1crypto-1.5.1-py2.py3-none-any.whl (105 kB)
+Requirement already satisfied: pyyaml>=6.0 in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from pyHanko>=0.12.1->xhtml2pdf) (6.0.1)
+Collecting tzlocal>=4.3
+  Downloading tzlocal-5.3.1-py3-none-any.whl (18 kB)
+Collecting cryptography>=43.0.3
+  Using cached cryptography-45.0.6-cp37-abi3-manylinux_2_34_x86_64.whl (4.4 MB)
+Requirement already satisfied: lxml>=5.4.0 in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from pyHanko>=0.12.1->xhtml2pdf) (5.4.0)
+Collecting uritools>=3.0.1
+  Downloading uritools-5.0.0-py3-none-any.whl (10 kB)
+Collecting oscrypto>=1.1.0
+  Downloading oscrypto-1.3.0-py2.py3-none-any.whl (194 kB)
+     ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 194.6/194.6 kB 17.0 MB/s eta 0:00:00
+Requirement already satisfied: typing_extensions>=4.0 in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from pypdf>=3.1.0->xhtml2pdf) (4.14.0)
+Requirement already satisfied: charset-normalizer in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from reportlab<5,>=4.0.4->xhtml2pdf) (2.0.4)
+Requirement already satisfied: idna<4,>=2.5 in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from requests->vaderSentiment) (3.4)
+Requirement already satisfied: urllib3<3,>=1.21.1 in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from requests->vaderSentiment) (1.26.15)
+Requirement already satisfied: certifi>=2017.4.17 in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from requests->vaderSentiment) (2025.6.15)
+Collecting tinycss2>=0.6.0
+  Downloading tinycss2-1.4.0-py3-none-any.whl (26 kB)
+Collecting cssselect2>=0.2.0
+  Using cached cssselect2-0.8.0-py3-none-any.whl (15 kB)
+Requirement already satisfied: cffi>=1.14 in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from cryptography>=43.0.3->pyHanko>=0.12.1->xhtml2pdf) (1.15.1)
+Requirement already satisfied: pycparser in /opt/conda/envs/mgx-chat/lib/python3.10/site-packages (from cffi>=1.14->cryptography>=43.0.3->pyHanko>=0.12.1->xhtml2pdf) (2.21)
+Building wheels for collected packages: svglib
+  Building wheel for svglib (setup.py): started
+  Building wheel for svglib (setup.py): finished with status 'done'
+  Created wheel for svglib: filename=svglib-1.5.1-py3-none-any.whl size=30909 sha256=cc39d923f36e86bc3845321349d1aae7662340cddec8044c291988ddcd4fd8fe
+  Stored in directory: /root/.cache/pip/wheels/56/9f/90/f37f4b9dbf82987a24ae14f15586e96715cb669a4710b3b85d
+Successfully built svglib
+Installing collected packages: webencodings, python-bidi, asn1crypto, arabic-reshaper, uritools, tzlocal, tinycss2, reportlab, oscrypto, html5lib, vaderSentiment, cssselect2, cryptography, svglib, pyhanko-certvalidator, pyHanko, xhtml2pdf
+  Attempting uninstall: cryptography
+    Found existing installation: cryptography 39.0.1
+    Uninstalling cryptography-39.0.1:
+      Successfully uninstalled cryptography-39.0.1
+ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.
+pyopenssl 23.0.0 requires cryptography<40,>=38.0.0, but you have cryptography 45.0.6 which is incompatible.
+Successfully installed arabic-reshaper asn1crypto cryptography cssselect2 html5lib oscrypto pyHanko pyhanko-certvalidator python-bidi reportlab svglib tinycss2 tzlocal uritools vaderSentiment webencodings xhtml2pdf
+WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv
+
+[notice] A new release of pip is available: 25.0.1 -> 25.2
+[notice] To update, run: pip install --upgrade pip

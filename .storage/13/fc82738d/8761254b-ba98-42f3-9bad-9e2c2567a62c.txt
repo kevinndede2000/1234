@@ -1,0 +1,31 @@
+$ git clone https://github.com/kevinndede2000/hack3.git
+Cloning into 'hack3'...
+$ cd hack3
+
+$ ls -la
+
+total 994
+drwxr-xr-x  46 root root 208896 Sep  1 02:37 .
+drwxr-xr-x 138 root root 606208 Sep  1 02:37 ..
+drwxr-xr-x  32 root root 151552 Sep  1 02:37 .git
+-rw-r--r--   1 root root    103 Sep  1 02:37 app.py
+drwxr-xr-x   3 root root   8192 Sep  1 02:37 data
+-rw-r--r--   1 root root    974 Sep  1 02:37 requirements.txt
+-rw-r--r--   1 root root      0 Sep  1 02:37 students.json
+-rw-r--r--   1 root root      0 Sep  1 02:37 teachers.json
+drwxr-xr-x   9 root root  40960 Sep  1 02:37 website
+$ ls -la website/
+
+total 310
+drwxr-xr-x  9 root root  40960 Sep  1 02:37 .
+drwxr-xr-x 46 root root 208896 Sep  1 02:37 ..
+-rw-r--r--  1 root root    243 Sep  1 02:37 __init__.py
+drwxr-xr-x  7 root root  32768 Sep  1 02:37 __pycache__
+-rw-r--r--  1 root root   1377 Sep  1 02:37 auth.py
+-rw-r--r--  1 root root    806 Sep  1 02:37 models.py
+drwxr-xr-x  3 root root   8192 Sep  1 02:37 static
+-rw-r--r--  1 root root      2 Sep  1 02:37 students.json
+-rw-r--r--  1 root root    227 Sep  1 02:37 subjects.py
+-rw-r--r--  1 root root      3 Sep  1 02:37 teachers.json
+drwxr-xr-x  5 root root  16384 Sep  1 02:37 templates
+-rw-r--r--  1 root root   5538 Sep  1 02:37 views.py
